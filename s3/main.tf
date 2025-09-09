@@ -16,3 +16,16 @@ resource "aws_s3_object" "data_cleaning_script" {
   source = "${path.module}/../glue_job/data_cleaning.py"
   etag   = filemd5("${path.module}/../glue_job/data_cleaning.py")
 }
+
+
+output "bucket_name" {
+  value = aws_s3_bucket.iot_glue_bucket.id
+}
+
+output "extract_script_path" {
+  value = aws_s3_object.glue_script.key
+}
+
+output "cleaning_script_path" {
+  value = aws_s3_object.data_cleaning_script.key
+}
