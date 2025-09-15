@@ -62,8 +62,8 @@ for coll in collections:
     # df = glueContext.create_dynamic_frame.from_options(
     #     connection_type="mongodb",
     #     connection_options={
-    #         "connectionName": "iot-mongodb-connection",
-    #         "database": "iot", 
+    #         "connectionName": "xx-mongodb-connection",
+    #         "database": "xx", 
     #         "collection": coll,
     #         "aggregation.pipeline": json.dumps(filter_query),
     #     }
@@ -76,7 +76,7 @@ for coll in collections:
 
     df = spark.read.format("mongodb") \
         .option("connection.uri", mongo_uri) \
-        .option("database", "iot") \
+        .option("database", "xx") \
         .option("collection", coll) \
         .option("aggregation.pipeline", json.dumps(filter_pipeline)) \
         .schema(custom_schema) \
