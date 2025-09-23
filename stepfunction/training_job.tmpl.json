@@ -1,0 +1,88 @@
+{
+  "Comment": "Trigger SageMaker Training",
+  "StartAt": "StartGlueWorkflow",
+  "States": {
+    "StartGlueWorkflow": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::aws-sdk:glue:startWorkflowRun",
+      "Parameters": {
+        "Name": "iot-glue-workflow"  
+      },
+      "ResultSelector": {
+        "WorkflowRunId.$": "$.RunId"
+      },
+      "ResultPath": "$.Run",
+      "Next": "CheckWorkflowStatus"
+    },
+    "CheckWorkflowStatus": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::aws-sdk:glue:getWorkflowRun",
+      "Parameters": {
+        "Name": "iot-glue-workflow",
+        "RunId.$": "$.Run.WorkflowRunId"
+      },
+      "ResultSelector": {
+        "WorkflowRunId.$": "$.Run.WorkflowRunId",
+        "Name.$": "$.Run.Name",
+        "StartedOn.$": "$.Run.StartedOn",
+        "Status.$": "$.Run.Status",
+        "WorkflowRunProperties.$": "$.Run.WorkflowRunProperties",
+        "Statistics.$": "$.Run.Statistics"
+      },
+      "ResultPath": "$.Run",
+      "Next": "IsComplete"
+    },
+    "IsComplete": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.Run.Status",
+          "StringEquals": "RUNNING",
+          "Next": "Wait"
+        }
+      ],
+      "Default": "SageMakerTrain"
+    },
+    "Wait": {
+      "Type": "Wait",
+      "Seconds": 30,
+      "Next": "CheckWorkflowStatus"
+    },
+    "SageMakerTrain": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sagemaker:createTrainingJob.sync",
+      "Parameters": {
+        "TrainingJobName.$": "$.TrainingJobName",
+        "AlgorithmSpecification": {
+          "TrainingImage.$": "$.TrainingImage",
+          "TrainingInputMode": "File"
+        },
+        "RoleArn.$": "$.SageMakerRoleArn",
+        "InputDataConfig": [
+          {
+            "ChannelName": "training",
+            "DataSource": {
+              "S3DataSource": {
+                "S3DataType": "S3Prefix",
+                "S3Uri.$": "$.InputS3Uri",
+                "S3DataDistributionType": "FullyReplicated"
+              }
+            }
+          }
+        ],
+        "OutputDataConfig": {
+          "S3OutputPath.$": "$.OutputS3Uri"
+        },
+        "ResourceConfig": {
+          "InstanceType": "ml.m5.large",
+          "InstanceCount": 1,
+          "VolumeSizeInGB": 10
+        },
+        "StoppingCondition": {
+          "MaxRuntimeInSeconds": 7200
+        }
+      },
+      "End": true
+    }
+  }
+}
