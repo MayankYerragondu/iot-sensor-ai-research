@@ -1,16 +1,24 @@
-# Smart Home IoT Anomaly Detection
+# Personalized Anomaly Detection for Smart Home IoT Environments
 
-## 📌 Overview
-This project explores **personalized anomaly detection models** for smart home IoT environments.  
-It focuses on **PIR motion sensors**, **contact alarms**, and **environmental sensors** (temperature, humidity, luminance) to reduce **false alarms** in intrusion detection systems.  
+## 📌 Abstract
+The goal of this project is to determine how well anomaly detection models perform for **home intruder detection using PIR (Passive Infrared) data**.  
+Traditional PIR-based alarm systems often trigger false alarms from non-threatening household activities (e.g., pets moving, family walking).  
+
+To solve this, we propose a **personalized anomaly detection model** that learns historical motion patterns per device (time of day, duration, frequency, and context). By continuously adapting to a household’s routine, the system filters predictable activity and flags only unusual patterns.
+
+We integrate multiple sensors:
+- **PIR alarms** (motion detection)
+- **Contact alarms** (doors/windows)
+- **Environmental sensors** (temperature, humidity, luminance)
+
+Models are trained per device using AWS Glue + SageMaker pipelines, harmonizing real-time (MongoDB) and archival (S3) data.  
+Performance of state-of-the-art methods is compared to highlight improvements in **false alarm reduction, forecasting accuracy, and scalability**.
 
 ---
-
-## 🚀 Features
-- Device-specific anomaly detection models for PIR sensors  
-- Contact alarm anomaly detection using temporal patterns + One-Class SVM  
-- Multivariate forecasting for environmental sensors (temperature, humidity, luminance)  
-- Modular AWS pipeline with Glue, SageMaker, Step Functions, and Terraform  
-- Scalable architecture supporting both **real-time (MongoDB)** and **historical (S3)** data  
+## 📖 Introduction
+- **Anomaly Detection**: Recognizing behaviors or events deviating from learned “normal” patterns.  
+- **Smart Home IoT**: Combination of PIR sensors, contact sensors, and environmental sensors.  
+- **Problem**: Traditional systems → high false-positive rates, asynchronous noisy data, difficulty harmonizing MongoDB (real-time) with S3 (archival).  
+- **Proposed Solution**: Device-specific anomaly detection pipeline that adapts over time, reduces false alarms, and improves security precision.
 
 ---
