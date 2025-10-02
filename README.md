@@ -22,3 +22,30 @@ Performance of state-of-the-art methods is compared to highlight improvements in
 - **Proposed Solution**: Device-specific anomaly detection pipeline that adapts over time, reduces false alarms, and improves security precision.
 
 ---
+
+
+## ⚙️ Methodology
+
+### PIR Anomaly Detection
+- Model: **Isolation Forest (per-device personalization)**  
+- Features:  
+  - Time of day  
+  - Day of week  
+  - Time difference between events  
+- Benefits: Learns household-specific motion patterns, reducing false alarms.
+
+### Contact Alarm Anomaly Detection
+- Model: **One-Class SVM (OC-SVM)**  
+- Features:  
+  - Hour of day  
+  - Day of week  
+  - Event frequency (hourly aggregation)  
+- Benefits: Detects unusual access patterns (e.g., late-night entries, unusual bursts).
+
+### Environmental Sensor Anomaly Detection
+- Model: **LSTM Encoder–Decoder (multivariate forecasting)**  
+- Sensors: Temperature, Humidity, Luminance  
+- Windowing: **5-min average**  
+- Benefits: Captures cross-sensor dependencies (e.g., door open → light + temp change).
+
+---
