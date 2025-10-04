@@ -8,15 +8,15 @@ os.makedirs("evaluation/plots", exist_ok=True)
 
 def plot_metrics(file, title):
     df = pd.read_csv(file)
-    metrics = ["precision"]
+    metrics = ["precision", "recall", "false_alarm_rate"]
 
     for metric in metrics:
-        plt.figure(figsize=(6,4))
+        plt.figure(figsize=(6,5))
         plt.bar(df["model"], df[metric], color="skyblue")
         plt.title(f"{title} - {metric.upper()}")
         plt.ylabel(metric.upper())
         plt.xlabel("Model")
-        plt.ylim(0,1)
+        plt.ylim(0,2)
         plt.tight_layout()
         out_path = f"evaluation/plots/{title}_{metric}.png"
         plt.savefig(out_path)
