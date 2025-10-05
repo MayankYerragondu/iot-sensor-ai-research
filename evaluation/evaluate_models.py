@@ -25,7 +25,7 @@ def evaluate_model(model, scaler, X_test, y_true):
     f1 = f1_score(y_true, y_pred, zero_division=0)
 
     tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
-    false_alarm_rate = fp / (fp + tn + 1e-6)
+    false_alarm_rate = fp / (fp + tn + 1e-5)
 
     return {
         "precision": precision,
