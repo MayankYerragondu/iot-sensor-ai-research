@@ -126,7 +126,7 @@ def run():
         model.fit(X_flat, y)
 
         # Step 8: Save locally and upload to S3
-        local_path = f"/tmp/{dev}.joblib"
+        local_path = f"/tmp/model/{dev}.joblib"
         joblib.dump(model, local_path)
 
         with open(local_path, "rb") as f:
