@@ -1,8 +1,17 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
 data "aws_caller_identity" "current" {}
 
 
 resource "aws_iam_role" "glue_role" {
-  name = "iot-glue-role"
+  name = "iot-glue-role-3"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -25,7 +34,7 @@ resource "aws_iam_role_policy_attachment" "glue_service" {
 }
 
 resource "aws_iam_role" "stepfunction" {
-  name = "stepfunction_sagemaker_role"
+  name = "stepfunction_sagemaker_role-3"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -38,7 +47,7 @@ resource "aws_iam_role" "stepfunction" {
 }
 
 resource "aws_iam_policy" "stepfunction_policy" {
-  name = "StepFunctionSageMakerPolicy"
+  name = "StepFunctionSageMakerPolicy-3"
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -68,7 +77,7 @@ resource "aws_iam_role_policy_attachment" "attach_stepfunction_policy" {
 }
 
 resource "aws_iam_role" "sagemaker_execution" {
-  name = "sagemaker_execution_role"
+  name = "sagemaker_execution_role-3"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -89,7 +98,7 @@ resource "aws_iam_role_policy_attachment" "sagemaker_execution_policy" {
 }
 
 resource "aws_iam_policy" "sagemaker_pull_policy" {
-  name = "SageMakerECRPullPolicy"
+  name = "SageMakerECRPullPolicy-3"
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -123,7 +132,7 @@ resource "aws_iam_role_policy_attachment" "sagemaker_pull_policy_attachment" {
 }
 
 resource "aws_iam_policy" "stepfunction_events_policy" {
-  name        = "StepFunctionEventsPolicy"
+  name        = "StepFunctionEventsPolicy-3"
   description = "Additional Step Functions permissions (if needed)"
 
   policy = jsonencode({
@@ -157,7 +166,7 @@ data "aws_iam_policy_document" "pass_sagemaker_role" {
     effect = "Allow"
     actions = ["iam:PassRole"]
     resources = [
-      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/sagemaker_execution_role"
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/sagemaker_execution_role-3"
     ]
     condition {
       test     = "StringEquals"
@@ -168,7 +177,7 @@ data "aws_iam_policy_document" "pass_sagemaker_role" {
 }
 
 resource "aws_iam_policy" "stepfunction_passrole_policy" {
-  name   = "StepFunctionPassSageMakerExecutionRole"
+  name   = "StepFunctionPassSageMakerExecutionRole-3"
   policy = data.aws_iam_policy_document.pass_sagemaker_role.json
 }
 
@@ -178,7 +187,7 @@ resource "aws_iam_role_policy_attachment" "attach_passrole" {
 }
 
 resource "aws_iam_policy" "stepfunction_glue_workflow_policy" {
-  name = "StepFunctionGlueWorkflowPolicy"
+  name = "StepFunctionGlueWorkflowPolicy-3"
 
   policy = jsonencode({
     Version = "2012-10-17",
