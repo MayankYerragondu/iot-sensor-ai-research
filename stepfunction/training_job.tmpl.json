@@ -6,7 +6,7 @@
       "Type": "Task",
       "Resource": "arn:aws:states:::aws-sdk:glue:startWorkflowRun",
       "Parameters": {
-        "Name": "iot-glue-workflow"  
+        "Name": "iot-glue-workflow-2"  
       },
       "ResultSelector": {
         "WorkflowRunId.$": "$.RunId"
@@ -18,7 +18,7 @@
       "Type": "Task",
       "Resource": "arn:aws:states:::aws-sdk:glue:getWorkflowRun",
       "Parameters": {
-        "Name": "iot-glue-workflow",
+        "Name": "iot-glue-workflow-2",
         "RunId.$": "$.Run.WorkflowRunId"
       },
       "ResultSelector": {
