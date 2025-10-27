@@ -13,6 +13,8 @@ import io
 import os
 from datetime import datetime
 from collections import defaultdict
+from urllib.parse import unquote
+
 
 def run():
     s3 = boto3.client('s3')
@@ -29,7 +31,8 @@ def run():
         key = obj['Key']
         parts = key.split('/')
         if len(parts) >= 4:
-            device_id = parts[3]
+            encoded_id = parts[3].split("=")[-1]
+            device_id = unquote(encoded_id)
             device_files[device_id].append(key)
 
     # -------------------------------
@@ -94,7 +97,8 @@ def run():
 
         df[["avg_temperature", "avg_humidity", "avg_lux"]] = (
             df[["avg_temperature", "avg_humidity", "avg_lux"]]
-            .replace("", np.nan)
+            # .replace("", np.nan)
+            .replace([None, np.nan, ""], 0)  # replace None, NaN, and empty string with 0
             .astype(float)
         )
         df.ffill(inplace=True)
@@ -146,11 +150,19 @@ def run():
         local_path = f"/tmp/{device_id}.keras"
         model.save(local_path)
 
-        with open(local_path, "rb") as f:
-            s3.put_object(Bucket=bucket_name, Key=f"{output_prefix}{device_id}.keras", Body=f)
+        # with open(local_path, "rb") as f:
+        #     s3.put_object(Bucket=bucket_name, Key=f"{output_prefix}{device_id}.keras", Body=f)
 
+        # os.remove(local_path)
+        # print(f"📦 Uploaded model to s3://{bucket_name}/{output_prefix}{device_id}.keras")
+
+        # Upload to S3
+        with open(local_path, "rb") as f:
+            s3.put_object(Bucket=bucket_name, Key=f"{output_prefix}{device_id}.h5", Body=f)
+
+        # Clean up
         os.remove(local_path)
-        print(f"📦 Uploaded model to s3://{bucket_name}/{output_prefix}{device_id}.keras")
+        print(f"📦 Uploaded model to s3://{bucket_name}/{output_prefix}{device_id}.h5")
 
 if __name__ == "__main__":
     run()
