@@ -52,6 +52,7 @@ resource "aws_glue_job" "cleaning" {
   glue_version      = "4.0"
   number_of_workers = 2
   worker_type       = "G.1X"
+  timeout = 10080
 }
 
 output "extract_job_name" {
