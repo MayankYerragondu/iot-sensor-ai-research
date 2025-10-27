@@ -9,6 +9,7 @@ import boto3
 import io
 import os
 from collections import defaultdict
+from urllib.parse import unquote
 
 
 def run():
@@ -25,7 +26,8 @@ def run():
         key = obj["Key"]
         parts = key.split("/")
         if len(parts) >= 4:
-            device_id = parts[3]
+            encoded_id = parts[3].split("=")[-1]
+            device_id = unquote(encoded_id)
             device_files[device_id].append(key)
 
     # ---- Step 2: train per device ----
