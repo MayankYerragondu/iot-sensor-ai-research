@@ -40,8 +40,8 @@ aws s3 cp "$ENV_SENSOR_TRAINING_SCRIPT_PATH" "s3://${BUCKET_NAME}/scripts/LSTM_m
 echo "=== Logging into ECR and pushing custom image ==="
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin "${ECR_IMAGE_URI%/*}"
 
-docker build -t sagemaker-custom-image:latest .
-docker tag sagemaker-custom-image:latest "$ECR_IMAGE_URI"
+docker build -t sagemaker-custom-image-1:latest .
+docker tag sagemaker-custom-image-1:latest "$ECR_IMAGE_URI"
 docker push "$ECR_IMAGE_URI"
 
 # === Trigger SageMaker Training via Step Function ===
