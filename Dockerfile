@@ -9,7 +9,7 @@ FROM --platform=linux/amd64 python:3.8-slim
 RUN pip install --no-cache-dir \
     pandas \
     numpy \
-    scikit-learn \
+    scikit-learn==1.2.2 \
     joblib \
     boto3 \
     tensorflow
@@ -27,14 +27,14 @@ RUN mkdir -p script/contact_alarm \
 
 # Copy only the required files
 COPY training_script_entry.py .
-COPY script/contact_alarm/one_class_svm.py script/contact_alarm/one_class_svm.py
-COPY script/contact_alarm/__init__.py script/contact_alarm/__init__.py
+COPY contact_alarm/one_class_svm.py contact_alarm/one_class_svm.py
+COPY contact_alarm/__init__.py contact_alarm/__init__.py
 
-COPY script/pir_alarm/isolation_forest.py script/pir_alarm/isolation_forest.py
-COPY script/pir_alarm/__init__.py script/pir_alarm/__init__.py
+COPY pir_alarm/isolation_forest.py pir_alarm/isolation_forest.py
+COPY pir_alarm/__init__.py pir_alarm/__init__.py
 
-COPY script/env_sensor/LSTM_model.py script/env_sensor/LSTM_model.py
-COPY script/env_sensor/__init__.py script/env_sensor/__init__.py
+COPY env_sensor/LSTM_model.py env_sensor/LSTM_model.py
+COPY env_sensor/__init__.py env_sensor/__init__.py
 
 # Define the script SageMaker should run
 ENV SAGEMAKER_PROGRAM training_script_entry.py
