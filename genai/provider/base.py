@@ -16,4 +16,8 @@ class AiProvider(ABC):
 
     @abstractmethod
     async def stream_chat(self, request: ChatRequest):
+        stream = await self.chat(request)
+        stream = stream.split("\n")
+        for line in stream:
+            yield line
         pass
