@@ -11,6 +11,7 @@ class OpenAIProvider(AiProvider):
     def type(self):
         return "OPENAI"
 
+    #   The chat method sends a request to OpenAI's chat completions API with the specified model and messages from the ChatRequest. It then returns the content of the first message in the response choices.
     async def chat(self, request: ChatRequest) -> str:
         response = await client.chat.completions.create(
             model="gpt-4o-mini",
