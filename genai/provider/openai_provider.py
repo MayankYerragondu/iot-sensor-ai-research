@@ -5,6 +5,7 @@ from app.config import settings
 
 client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
 
+# OpenAIProvider implements the AiProvider interface to interact with OpenAI's API for chat completions.
 class OpenAIProvider(AiProvider):
 
     def type(self):
