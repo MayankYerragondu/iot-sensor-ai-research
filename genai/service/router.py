@@ -12,4 +12,5 @@ class ProviderRouter:
             return self.openai
         if mode == "RAG":
             return self.rag
-        return self.rag  # AUTO default to RAG for IoT
+        return self.rag  
+    # AUTO default to RAG for IoT
