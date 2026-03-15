@@ -18,4 +18,16 @@ class ProviderRouter:
         if mode == "RAG":
             return self.rag
         return self.rag  
-    # AUTO default to RAG for IoT
+
+    # Get the default provider
+    def default(self):
+        return self.rag
+    
+    # Get the provider type
+    def type(self):
+        return "ROUTER"
+    
+    # Get the provider name
+    def name(self):
+        return "Provider Router"    
+    
