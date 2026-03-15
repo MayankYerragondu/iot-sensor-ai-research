@@ -18,3 +18,15 @@ class ChatService:
             provider=provider.type(),
             answer=answer
         )
+    
+    # AUTO default to RAG for IoT
+    async def chat(self, request: ChatRequest) -> ChatResponse:
+        provider = self.router.choose(request.mode)
+        answer = await provider.chat(request)
+
+        # Return the response from the provider
+        return ChatResponse(
+            provider=provider.type(),
+            answer=answer
+        )
+    
