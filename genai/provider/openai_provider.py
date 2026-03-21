@@ -18,3 +18,8 @@ class OpenAIProvider(AiProvider):
             messages=[m.dict() for m in request.messages]
         )
         return response.choices[0].message.content
+    
+    # The name method returns the name of the provider, which is "OpenAI Provider" in this case.
+    def name(self):
+        return "OpenAI Provider"
+    
