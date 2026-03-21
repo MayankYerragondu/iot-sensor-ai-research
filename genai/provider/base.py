@@ -21,3 +21,8 @@ class AiProvider(ABC):
         for line in stream:
             yield line
         pass
+
+    # The name method is an abstract method that should return the name of the provider. Implementing classes must provide their own logic for returning the provider's name.
+    @abstractmethod
+    def name(self) -> str:
+        pass
