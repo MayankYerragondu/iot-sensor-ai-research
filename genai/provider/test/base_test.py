@@ -31,6 +31,7 @@ def chat_request():
     )
 
 
+# Provider fixture
 @pytest.fixture
 def provider():
     return MockAiProvider()
@@ -40,20 +41,23 @@ def provider():
 # Tests
 # ------------------------
 
+# Test the type method
 def test_type(provider):
     assert provider.type() == "mock"
 
 
+# Test the name method
 def test_name(provider):
     assert provider.name() == "Mock Provider"
 
 
+# Chat tests
 @pytest.mark.asyncio
 async def test_chat(provider, chat_request):
     response = await provider.chat(chat_request)
     assert response == "line1\nline2\nline3"
 
-
+# Stream chat tests
 @pytest.mark.asyncio
 async def test_stream_chat(provider, chat_request):
     result = []
