@@ -51,6 +51,17 @@ def test_name(provider):
 @pytest.mark.asyncio
 @patch("app.providers.openai_provider.client")
 async def test_chat(mock_client, provider, chat_request):
+
+    # test the transformation of ChatRequest to OpenAI's expected format and the handling of the response
+    expected_messages = [
+        {"role": "user", "content": "Hello"},
+        {"role": "assistant", "content": "Hi there"}
+    ]   
+    mock_client.chat.completions.create = AsyncMock()
+    input_messages = [msg.dict() for msg in chat_request.messages]
+    assert input_messages == expected_messages
+
+
     # ------------------------
     # Mock OpenAI response
     # ------------------------
