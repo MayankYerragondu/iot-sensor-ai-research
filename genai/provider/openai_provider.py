@@ -11,19 +11,14 @@ class OpenAIProvider(AiProvider):
     def type(self):
         return "OPENAI"
 
-    #   The chat method sends a request to OpenAI's chat completions API with the specified model and messages from the ChatRequest. It then returns the content of the first message in the response choices.
-    async def chat(self, request: ChatRequest) -> str:
-        response = await client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[m.dict() for m in request.messages]
-        )
-        return response.choices[0].message.content
-    
-    # The name method returns the name of the provider, which is "OpenAI Provider" in this case.
+    # The name method returns a dictionary with the provider's name and additional metadata.
     def name(self):
         """
-        Returns the human-readable name of this AI provider implementation.
+        Returns metadata about this AI provider implementation.
         This can be used for display purposes in UIs or logs.
         """
-        return "OpenAI Provider"
-    
+        return {
+            "name": "OpenAI Provider",
+            "type": self.type(),
+            "model": "gpt-4o-mini"
+        }
