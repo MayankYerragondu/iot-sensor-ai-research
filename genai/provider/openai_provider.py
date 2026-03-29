@@ -21,5 +21,9 @@ class OpenAIProvider(AiProvider):
     
     # The name method returns the name of the provider, which is "OpenAI Provider" in this case.
     def name(self):
+        """
+        Returns the human-readable name of this AI provider implementation.
+        This can be used for display purposes in UIs or logs.
+        """
         return "OpenAI Provider"
     
