@@ -19,6 +19,7 @@ def run():
     response = s3.list_objects_v2(Bucket=bucket_name, Prefix=input_prefix)
 
     # Step 2: Organize files by device ID
+    # Assuming the device ID is the 4th part of the key (after splitting by '/')
     from collections import defaultdict
     device_files = defaultdict(list)
 
