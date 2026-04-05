@@ -11,6 +11,8 @@ import boto3
 import io
 from tensorflow.keras import Input
 import os
+import warnings
+warnings.filterwarnings("ignore")
 
 def run():
     s3 = boto3.client('s3')
