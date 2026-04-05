@@ -15,8 +15,9 @@ import warnings
 warnings.filterwarnings("ignore")
 
 def run():
+    # Initialize S3 client and define bucket/prefixes
     s3 = boto3.client('s3')
-    bucket_name = 'iot-glue-bucket-multi-model'
+    bucket_name = 'iot-glue-bucket'
     input_prefix = 'output/cleaned/env_sensor/'
     output_prefix = 'model/env_sensor/'
 
