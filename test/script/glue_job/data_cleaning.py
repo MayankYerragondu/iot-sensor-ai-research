@@ -18,6 +18,7 @@ df = df.withColumn("timestamp", col("timestamp").cast("timestamp"))
 
 
 # ========= PIR ALARM =========
+# Extract rows where pirAlarm is not null, then write one folder per device
 pir_df = df.select("timestamp", "devid", "pirAlarm") \
             .where(col("pirAlarm").isNotNull()) \
 
