@@ -146,8 +146,9 @@ for coll in collections:
         ).alias("lux")
     )
 
-    logger.info(f"result schema data : {result._jdf.schema().treeString()}")
 
+    logger.info(f"result schema data : {result._jdf.schema().treeString()}")
+    # show sample data
     result.show(n=10, truncate=False)
     
 
