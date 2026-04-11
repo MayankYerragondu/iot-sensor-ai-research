@@ -18,4 +18,5 @@ payload = {
 }
 
 resp = predictor.predict(payload, target_model="70:2c:1f:32:2c:54_zwave-c04d323e:3-2.tar.gz")
-print(resp)
+# Replace with an assertion to validate the response
+assert resp is not None, "The predictor response should not be None"
