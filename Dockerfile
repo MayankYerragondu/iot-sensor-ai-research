@@ -30,6 +30,7 @@ COPY training_script_entry.py .
 COPY contact_alarm/one_class_svm.py contact_alarm/one_class_svm.py
 COPY contact_alarm/__init__.py contact_alarm/__init__.py
 
+# Copy the necessary files for the PIR alarm model
 COPY pir_alarm/isolation_forest.py pir_alarm/isolation_forest.py
 COPY pir_alarm/__init__.py pir_alarm/__init__.py
 
