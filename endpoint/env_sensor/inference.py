@@ -100,25 +100,33 @@ def predict_fn(input_data, model_and_scaler):
     mse = np.mean(np.square(X_seq[:, :, :3] - reconstructed), axis=(1, 2))
     is_anomaly = (mse > 0.01).astype(int).tolist()
 
+    # Compute additional metrics if needed
     result = {
         "reconstruction_error": mse.tolist(),
         "is_anomaly": is_anomaly
     }
+    # Log the prediction results for debugging
     print(f"🔎 result = {result}")
     return result
 
 
+# Output function to format the prediction result as JSON
 def output_fn(prediction, accept):
     resp = json.dumps(prediction)
     print(f"📤 output = {resp}")
     return resp
 
 
+# Main handler function that SageMaker will call
 def handler(data, context):
     try:
         print("🚀 handler invoked")
+        # Load the model and scaler
         model_ctx = model_fn(context.model_dir)
+        # Log the raw input data for debugging
         inp = input_fn(data.read().decode("utf-8"), context.request_content_type)
+        # Log the parsed input data for debugging
+        print(f"✅ Parsed input data: {inp.to_dict(orient='records')}")
         preds = predict_fn(inp, model_ctx)
         return output_fn(preds, context.accept_header)
     except Exception as e:
