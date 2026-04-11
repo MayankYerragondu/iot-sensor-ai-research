@@ -49,6 +49,7 @@ def run():
             filtered_df = filtered_df[(filtered_df[col] >= q_low) & (filtered_df[col] <= q_high)]
         return filtered_df
 
+    # Build a simple LSTM model for time series forecasting
     def build_lstm_model(input_shape, units=256):
         model = Sequential([
             Input(shape=input_shape),
