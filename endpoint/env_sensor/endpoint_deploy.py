@@ -25,6 +25,7 @@ for fn, param in [
 # 2️⃣ Define your base model using your custom Docker image
 custom_image = "743634506477.dkr.ecr.us-east-1.amazonaws.com/iot-env-sensor-sagemaker-image:latest"
 
+# Define the base model
 base_model = Model(
     image_uri=custom_image,
     role=role_arn,
