@@ -10,6 +10,7 @@ pred = Predictor(
     deserializer=JSONDeserializer(),      # sets Accept: application/json
 )
 
+# Example payload with a timestamp field (adjust the timestamp format as needed by your model)
 payload = {"timestamp": "2025-08-21T05:59:00Z"}
 resp = pred.predict(
     payload,

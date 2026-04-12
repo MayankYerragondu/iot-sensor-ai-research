@@ -48,6 +48,7 @@ def input_fn(request_body, content_type):
     print(f"🧭 Incoming content type: {content_type}")
     print(f"Raw request body: {request_body}")
 
+    # For simplicity, we only support JSON input with a timestamp field. In production, you may want to add more robust parsing and validation.
     if content_type == "application/json":
         data = json.loads(request_body)
         ts = pd.to_datetime(data["timestamp"], utc=True)
